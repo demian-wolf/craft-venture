@@ -3,7 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    
+
+    {% block site_scripts %}
+    {% endblock %}
+
     {% block site_links %}
     {% endblock %}
 </head>
@@ -22,8 +25,5 @@
         {% endblock %}
     </footer>
 </body>
-
-{% block site_scripts %}
-{% endblock %}
 
 </html>

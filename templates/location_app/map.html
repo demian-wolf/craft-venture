@@ -1,55 +1,29 @@
+{% extends 'base.html' %}
 {% load static %}
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-    {#    <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>#}
+{% block site_links %}
     <style>
-      #map {
-        height: 50%;
-        width: 50%;
-        margin: auto auto;
-      }
-      html, body {
-        height: 100%;
-        margin: 0;
-        padding: 0;
-      }
+
+        #map {
+            height: 50%;
+            width: 50%;
+            margin: auto auto;
+          }
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+          }
     </style>
-    
+{% endblock %}
 
-</head>
-<body>
-{#    <script#}
-{#        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBsjNCrYwMyg6mqDZEVRrnaau6Blmyf6N8&libraries=maps,marker&v=beta"#}
-{#        defer></script>#}
-{#        <gmp-map#}
-{#          center="43.4142989,-124.2301242"#}
-{#          zoom="4"#}
-{#          map-id="DEMO_MAP_ID"#}
-{#          style="height: 400px"#}
-{#        >#}
-{#          <gmp-advanced-marker#}
-{#            position="37.4220656,-122.0840897"#}
-{#            title="Mountain View, CA"#}
-{#          ></gmp-advanced-marker>#}
-{#          <gmp-advanced-marker#}
-{#            position="47.648994,-122.3503845"#}
-{#            title="Seattle, WA"#}
-{#          ></gmp-advanced-marker>#}
-{#        </gmp-map>#}
-{#    #}
-
+{% block site_main %}
     <h3>My Google Maps Demo</h3>
-    
-    <!--The div element for the map -->
-  
-    <div id="map">
-    </div>
-    
-</body>
-<script src="{% static 'location_app/js/map_script_setup.js' %}"></script>
-<script src="{% static 'location_app/js/load_map_and_markers.js' %}"></script>
-</html>
+
+    <div id="map"></div>
+{% endblock %}
+
+{% block site_scripts %}
+    <script src="{% static 'location_app/js/map_script_setup.js' %}"></script>
+    <script src="{% static 'location_app/js/load_map_and_markers.js' %}"></script>
+{% endblock %}
