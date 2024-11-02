@@ -44,7 +44,7 @@ class Link(models.Model):
     href = models.CharField()
 
 
-class Category:
+class Category(models.Model):
     name = models.CharField(max_length=128)
 
 
