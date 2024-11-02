@@ -1,15 +1,15 @@
 from django import forms
 
-from .models import UserSearch, SearchFeedback
+from .models import UserSearch
 
 
 class SearchForm(forms.ModelForm):
     class Meta:
         model = UserSearch
         
-        fields = ["start_date", "end_date", "radius"]
+        fields = ["starts_at", "ends_at", "radius"]
         
         widgets = {
-            "start_date": forms.DateInput(attrs={"type": "date"}),
-            "end_date": forms.DateInput(attrs={"type": "date"}),
+            "starts_at": forms.DateInput(attrs={"type": "date"}),
+            "ends_at": forms.DateInput(attrs={"type": "date"}),
         }

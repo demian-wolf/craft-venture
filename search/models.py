@@ -17,34 +17,33 @@ class UserSearch(models.Model):
     user = models.OneToOneField(
         settings.AUTH_USER_MODEL, null=True, blank=True, on_delete=models.CASCADE,
     )
-
     temporary_user = models.OneToOneField(
         TemporaryUser, null=True, blank=True, on_delete=models.CASCADE,
     )
+    created_at = models.DateTimeField(auto_now_add=True)
 
-    start_date = models.DateField()
-    end_date = models.DateField()
+    starts_at = models.DateTimeField()
+    ends_at = models.DateTimeField()
 
     radius = models.IntegerField(
         default=500,
         validators=[MinValueValidator(500), MaxValueValidator(500_000)],
     )
 
-    favorites = models.ManyToManyField(
-        "workshop.Workshop", blank=True, related_name="favorites",
-    )
-    declined = models.ManyToManyField(
-        "workshop.Workshop", blank=True, related_name="declined",
-    )
 
-
-class SearchFeedback(models.Model):
-    search = models.OneToOneField(
+class UserSearchStage(models.Model):
+    search = models.ForeignKey(
         UserSearch, on_delete=models.CASCADE,
     )
-
     workshop = models.OneToOneField(
         "workshop.Workshop", on_delete=models.CASCADE,
     )
 
-    is_accepted = models.BooleanField()
+    is_completed = models.BooleanField(default=False)
+    is_accepted = models.BooleanField(default=False)
+
+    def is_favorite(self) -> bool:
+        return self.is_completed and (self.is_accepted)
+
+    def is_declined(self) -> bool:
+        return self.is_completed and (not self.is_accepted)
