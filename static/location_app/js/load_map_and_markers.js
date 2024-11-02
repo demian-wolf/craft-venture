@@ -29,6 +29,5 @@ async function initMap() {
       });
     }
 
-// document.addEventListener('DOMContentLoaded', initMap)
+document.addEventListener('DOMContentLoaded', initMap)
 // initMap();
-window.onload = initMap;

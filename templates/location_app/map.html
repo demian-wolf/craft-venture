@@ -1,29 +1,31 @@
-{% extends 'base.html' %}
 {% load static %}
-
-{% block site_links %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
     <style>
-
-        #map {
-            height: 50%;
-            width: 50%;
-            margin: auto auto;
-          }
-        html, body {
-            height: 100%;
-            margin: 0;
-            padding: 0;
-          }
+      #map {
+        height: 50%;
+        width: 50%;
+        margin: auto auto;
+      }
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
     </style>
-{% endblock %}
+</head>
 
-{% block site_main %}
+<body>
     <h3>My Google Maps Demo</h3>
+    
+    <div id="map">
+    </div>
+</body>
 
-    <div id="map"></div>
-{% endblock %}
+<script src="{% static 'location_app/js/load_map_and_markers.js' %}"></script>
+<script src="{% static 'location_app/js/map_script_setup.js' %}"></script>
 
-{% block site_scripts %}
-    <script src="{% static 'location_app/js/map_script_setup.js' %}"></script>
-    <script src="{% static 'location_app/js/load_map_and_markers.js' %}"></script>
-{% endblock %}
+</html>
