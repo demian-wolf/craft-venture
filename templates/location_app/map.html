@@ -1,31 +1,34 @@
 {% load static %}
-<!DOCTYPE html>
+
+<!doctype html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
-    <style>
-      #map {
-        height: 50%;
-        width: 50%;
-        margin: auto auto;
-      }
-      html, body {
-        height: 100%;
-        margin: 0;
-        padding: 0;
-      }
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    
+     <style>
+
+        #map {
+            height: 50%;
+            width: 50%;
+            margin: auto auto;
+          }
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+          }
     </style>
 </head>
-
 <body>
     <h3>My Google Maps Demo</h3>
-    
-    <div id="map">
-    </div>
+        <div id="map"></div>
 </body>
-
-<script src="{% static 'location_app/js/load_map_and_markers.js' %}"></script>
-<script src="{% static 'location_app/js/map_script_setup.js' %}"></script>
-
+    <script src="{% static 'location_app/js/load_map_and_markers.js' %}"></script>
+    <script src="{% static 'location_app/js/map_script_setup.js' %}"></script>
 </html>
+
+
