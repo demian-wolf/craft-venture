@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    
+    {% block site_links %}
+    {% endblock %}
+</head>
+
+<body>
+    <header>
+        {% block site_header %}
+        {% endblock %}
+    </header>   
+    <main>
+        {% block site_main %}
+        {% endblock %}
+    </main>
+    <footer>
+        {% block site_footer %}
+        {% endblock %}
+    </footer>
+</body>
+
+{% block site_scripts %}
+{% endblock %}
+
+</html>
