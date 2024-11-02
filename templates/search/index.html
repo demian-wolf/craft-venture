@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block site_scripts %}
+<script>
+    function submitForm(isAccepted) {
+        isAcceptedForm = document.getElementById("isAcceptedForm");
+        isAcceptedValue = document.getElementById("isAcceptedValue");
+
+        isAcceptedValue.value = isAccepted;
+        isAcceptedForm.submit();
+    }
+
+    document.addEventListener(
+        "DOMContentLoaded", function() {
+            let acceptButton = document.getElementById("acceptButton");
+            let declineButton = document.getElementById("declineButton");
+            
+            acceptButton.addEventListener("click", function() {
+                submitForm(1);
+            });
+            declineButton.addEventListener("click", function() {
+                submitForm(0);
+            });
+        }
+    );
+</script>
+{% endblock %}
+
+{% block site_main %}
+<!-- TODO: Reusable Embeddable Preview -->
+
+<div>
+    <p>{{ workshop.scheduled_at }}</p>
+    <p>{{ workshop.created_at }}</p>
+
+    <p>{{ workshop.title }}</p>
+    <p>{{ workshop.description }}</p>
+
+    <p>{{ workshop.price }}</p>
+    <p>{{ workshop.capacity }}</p>
+</div>
+
+<form id="isAcceptedForm" method="post">
+    {% csrf_token %}
+    <input type="hidden" id="isAcceptedValue" name="accepted"/>
+    <input type="hidden" name="workshop_id" value="{{ workshop.id }}"/>
+
+    <button type="button" id="acceptButton">Yes</button>
+    <button type="button" id="declineButton">No</button>
+</form>
+{% endblock %}
