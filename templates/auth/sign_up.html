@@ -2,103 +2,136 @@
 
 {% block site_links %}
     <style>
-    /* Basic reset */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
+        /* Basic reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-/* Flex container for the full layout */
-.container {
-  display: flex;
-  height: 100vh; /* Full viewport height */
-}
+        /* Flex container for the full layout */
+        .container {
+            display: flex;
+            height: 100vh; /* Full viewport height */
+        }
 
-/* Left side - auth form */
-.auth-form {
-  flex: 1;
-  padding: 2rem;
-  background-color: #f8f9fa; /* Light background color */
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: flex-start;
-}
+        /* Left side - auth form */
+        .auth-form {
+            flex: 1;
+            padding: 2rem;
+        {#background-color: #f8f9fa; /* Light background color */#} display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-start;
+        }
 
-.auth-form h2 {
-  margin-bottom: 1rem;
-  color: #333;
-}
+        .auth-form h2 {
+            margin-bottom: 1rem;
+            color: #333;
+            font-family: var(--font-secondary);
+        }
 
-.auth-form form {
-  width: 100%;
-}
+        .auth-form form {
+            width: 100%;
+        }
 
-.auth-form label {
-  display: block;
-  margin-top: 1rem;
-  font-weight: bold;
-  color: #555;
-}
+        .auth-form label {
+            display: block;
+            margin-top: 1rem;
+            font-weight: 500;
+            color: #555;
+            font-family: var(--font-secondary);
+        }
 
-.auth-form input {
-  width: 100%;
-  padding: 0.75rem;
-  margin-top: 0.5rem;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-}
+        .auth-form input {
+            width: 100%;
+            padding: 0.75rem 0.75rem 0.75rem 2.25rem;
+            margin-top: 0.5rem;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
 
-.auth-form button {
-  margin-top: 1.5rem;
-  padding: 0.75rem;
-  width: 100%;
-  background-color: #007bff;
-  border: none;
-  color: #fff;
-  font-size: 1rem;
-  border-radius: 4px;
-  cursor: pointer;
-}
+        .auth-form button {
+            margin-top: 1.5rem;
+            padding: 0.75rem;
+            width: 100%;
+            background-color: #007bff;
+            border: none;
+            color: #fff;
+            font-size: 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+        }
 
-.auth-form button:hover {
-  background-color: #0056b3;
-}
+        .auth-form button:hover {
+            background-color: #0056b3;
+        }
 
-/* Right side - full-screen image */
-.image-side {
-  flex: 1;
-  background-image: url('your-image-url.jpg'); /* Replace with your image URL */
-  background-size: cover;
-  background-position: center;
-}
+        .image-container {
+            position: relative;
+            height: 100%; /* Ensures the container takes the full height */
+            clip-path: polygon(20% 0, 100% 0, 100% 100%, 0% 100%);
+            overflow: hidden; /* Prevents overflow of image outside the container */
+        }
+
+        .image-container img {
+            position: absolute; /* Positioning for the image */
+            top: 50%; /* Center the image */
+            left: 50%; /* Center the image */
+            transform: translate(-50%, -50%); /* Adjust for centering */
+            width: 120%; /* Slightly larger to ensure covering of the container */
+            height: auto; /* Maintain aspect ratio */
+            object-fit: cover; /* Ensures the image covers the container */
+        }
+        
+       
+        
+        
+
     </style>
 {% endblock %}
 
 {% block site_main %}
-    <div class="container">
-        <!-- Left side: Authentication form -->
-        <div class="auth-form">
-            <h2>Sign Up</h2>
+    <div class="container-fluid d-flex align-items-center justify-content-center"
+         style="height: 100vh;">
+        <div class="row w-100 h-100">
 
-            <form>
-                <label for="email">Email:</label>
-                <input type="email" id="email" name="email" required>
+            <!-- Left Column: Form -->
+            <div class="col-md-6 d-flex justify-content-center align-items-center" style="height: 100%;">
+                <div class="auth-form" id="authForm">
+                   <form>
+                        <h2>Sign Up</h2>
+                        <p class="pb-4">You already have an account? <a href="#">Sign In</a></p>
+            
+                        <div class="form-group position-relative mb-3">
+                            <label for="email" class="visually-hidden">Email:</label>
+                            <i class="fas fa-envelope position-absolute" style="left: 12px; top: 16px;"></i>
+                            <input class="form-control pl-4" type="email" id="email" name="email" placeholder="Email" required>
+                        </div>
+            
+                        <div class="form-group position-relative mb-3">
+                            <label for="password" class="visually-hidden">Password:</label>
+                            <i class="fas fa-lock position-absolute" style="left: 12px; top: 16px;"></i>
+                            <input class="form-control pl-5" type="password" id="password" name="password" placeholder="Password" required>
+                        </div>
+            
+                        <div class="form-group position-relative mb-3">
+                            <label for="confirm-password" class="visually-hidden">Confirm Password:</label>
+                            <i class="fas fa-lock position-absolute" style="left: 12px; top: 16px;"></i>
+                            <input class="form-control pl-5" type="password" id="confirm-password" name="confirm-password" placeholder="Confirm Password" required>
+                        </div>
+            
+                        <button type="submit" class="btn btn-primary w-100">Sign Up</button>
+                    </form>
+                </div>
+            </div>
 
-                <label for="password">Password:</label>
-                <input type="password" id="password" name="password" required>
+            <!-- Right Column: Image -->
+            <div class="col-md-6 p-0 d-flex align-items-center image-container" style="height: 100%;">
+                <img src="https://images.unsplash.com/photo-1531973576160-7125cd663d86?q=80&w=3540&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                     alt="No image" class="img-fluid w-100 h-100" style="object-fit: cover;">
+            </div>
 
-                <label for="confirm-password">Confirm Password:</label>
-                <input type="password" id="confirm-password" name="confirm-password" required>
-
-                <button type="submit">Sign Up</button>
-            </form>
-        </div>
-
-        <!-- Right side: Full-screen image -->
-        <div class="image-side">
-            <!-- The background image will be applied using CSS -->
         </div>
     </div>
 {% endblock %}
