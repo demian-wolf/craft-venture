@@ -44,9 +44,3 @@ class UserSearchStage(models.Model):
 
     is_completed = models.BooleanField(default=False)
     is_accepted = models.BooleanField(default=False)
-
-    def is_favorite(self) -> bool:
-        return self.is_completed and (self.is_accepted)
-
-    def is_declined(self) -> bool:
-        return self.is_completed and (not self.is_accepted)
