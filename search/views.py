@@ -3,10 +3,20 @@ from django.shortcuts import render
 from django.http import HttpResponse, Http404, HttpResponseBadRequest
 from django.shortcuts import render, redirect
 
-from workshop.models import Workshop
-from search.models import TemporaryUser, UserSearch, SearchFeedback
+from search.models import TemporaryUser, UserSearch, UserSearchStage
 
 from search.forms import SearchForm
+from workshop.models import Workshop
+
+
+def _ownership(request) -> dict:
+    if request.user.is_authenticated:
+        return {"user": request.user}
+    
+    temporary_user = TemporaryUser.objects.create()
+    request.session["temporary_user_id"] = str(temporary_user.id)
+
+    return {"temporary_user_id": temporary_user.id}
 
 
 class IndexView(View):
@@ -25,22 +35,18 @@ class IndexView(View):
                 request, "workshop/index.html", {"form": form},
             )
 
-        if request.user.is_authenticated:
-            ownership = {"user": request.user}
-        else:
-            temporary_user = TemporaryUser.objects.create()
-            request.session["temporary_user_id"] = str(temporary_user.id)
+        ownership = _ownership(request)
+        data = form.cleaned_data
 
-            ownership = {"temporary_user_id": temporary_user.id}
-
-        # reset session
+        # reset search for the user
         UserSearch.objects.filter(**ownership).delete()
 
+        # create a new one
         UserSearch.objects.create(
             **ownership,
-            start_date=form.cleaned_data.get("start_date"),
-            end_date=form.cleaned_data.get("end_date"),
-            radius=form.cleaned_data.get("radius"),
+            starts_at=data.get("starts_at"),
+            ends_at=data.get("ends_at"),
+            radius=data.get("radius"),
         )
 
         return redirect("search")
@@ -49,22 +55,31 @@ class IndexView(View):
 class UserSearchView(View):
     def get(self, request):
         if request.user.is_authenticated:
-            feedback = SearchFeedback.objects.filter(
-                user=request.user,
-            )
+            search = UserSearch.objects.get(user=request.user)
         else:
             temporary_user_id = request.session.get("temporary_user_id")
+            temporary_user = TemporaryUser.objects.get(id=temporary_user_id)
 
-            if not temporary_user_id:
-                return redirect("index")
-            
-            feedback = SearchFeedback.objects.filter(
-                search__temporary_user__id=temporary_user_id,
-            )
+            search = UserSearch.objects.get(temporary_user=temporary_user)
+
+        exclude = {stage.workshop.id for stage in UserSearchStage.objects.filter(
+            search=search,
+        )}
+
+        exclude = UserSearchStage.objects.filter(
+            search=search,
+        ).values_list("workshop__id", flat=True)
 
         workshop = Workshop.objects.exclude(
-            id__in={f.workshop_id for f in feedback}
+            id__in=exclude,
+        ).exclude(
+            is_completed=True,
         ).first()
+
+        UserSearchStage.objects.create(
+            search=search,
+            workshop=workshop,
+        )
 
         return render(
             request, "search/index.html", {"workshop": workshop},
