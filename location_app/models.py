@@ -6,5 +6,5 @@ class Location(models.Model):
     address = models.CharField(max_length=128)
     postcode = models.CharField(max_length=16)
 
-    lat = models.DecimalField(max_digits=9, decimal_places=6)
-    lng = models.DecimalField(max_digits=9, decimal_places=6)
+    lat = models.FloatField()
+    lng = models.FloatField()

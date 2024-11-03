@@ -30,6 +30,9 @@ class UserSearch(models.Model):
         validators=[MinValueValidator(500), MaxValueValidator(500_000)],
     )
 
+    lat = models.FloatField()
+    lng = models.FloatField()
+
 
 class UserSearchStage(models.Model):
     search = models.ForeignKey(
