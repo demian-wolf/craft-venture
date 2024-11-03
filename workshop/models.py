@@ -17,6 +17,31 @@ class Workshop(models.Model):
         on_delete=models.CASCADE,
     )
 
+    def get_average_rating(self) -> int:
+        reviews = Review.objects.filter(workshop=self)
+
+        length = len(reviews)
+
+        if not length:
+            return 0
+
+        return round(
+            sum(r.rating for r in reviews) / length
+        )
+
+    def rating_prerendered(self) -> str:
+        rating = self.get_average_rating()
+
+        out = ""
+
+        for _ in range(rating):
+            out += '<i class="fas fa-star text-warning"></i>'
+        
+        for _ in range(5 - rating):
+            out += '<i class="far fa-star text-warning"></i>'
+
+        return out
+
 
 class Review(models.Model):
     class Rating(models.IntegerChoices):

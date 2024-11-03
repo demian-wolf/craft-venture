@@ -149,11 +149,7 @@
                 <div class="row pb-4">
                     <div class="col text-center"> <!-- Center the rating -->
                         <div class="rating">
-                            <i class="fas fa-star text-warning"></i>
-                            <i class="fas fa-star text-warning"></i>
-                            <i class="fas fa-star text-warning"></i>
-                            <i class="fas fa-star-half-alt text-warning"></i> <!-- Half star for partial rating -->
-                            <i class="far fa-star text-warning"></i>
+                            {{ workshop.rating_prerendered|safe }}
                         </div>
                     </div>
                 </div>
