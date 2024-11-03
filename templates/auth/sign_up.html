@@ -1,0 +1,104 @@
+{% extends 'base.html' %}
+
+{% block site_links %}
+    <style>
+    /* Basic reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Flex container for the full layout */
+.container {
+  display: flex;
+  height: 100vh; /* Full viewport height */
+}
+
+/* Left side - auth form */
+.auth-form {
+  flex: 1;
+  padding: 2rem;
+  background-color: #f8f9fa; /* Light background color */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.auth-form h2 {
+  margin-bottom: 1rem;
+  color: #333;
+}
+
+.auth-form form {
+  width: 100%;
+}
+
+.auth-form label {
+  display: block;
+  margin-top: 1rem;
+  font-weight: bold;
+  color: #555;
+}
+
+.auth-form input {
+  width: 100%;
+  padding: 0.75rem;
+  margin-top: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.auth-form button {
+  margin-top: 1.5rem;
+  padding: 0.75rem;
+  width: 100%;
+  background-color: #007bff;
+  border: none;
+  color: #fff;
+  font-size: 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.auth-form button:hover {
+  background-color: #0056b3;
+}
+
+/* Right side - full-screen image */
+.image-side {
+  flex: 1;
+  background-image: url('your-image-url.jpg'); /* Replace with your image URL */
+  background-size: cover;
+  background-position: center;
+}
+    </style>
+{% endblock %}
+
+{% block site_main %}
+    <div class="container">
+        <!-- Left side: Authentication form -->
+        <div class="auth-form">
+            <h2>Sign Up</h2>
+
+            <form>
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required>
+
+                <label for="confirm-password">Confirm Password:</label>
+                <input type="password" id="confirm-password" name="confirm-password" required>
+
+                <button type="submit">Sign Up</button>
+            </form>
+        </div>
+
+        <!-- Right side: Full-screen image -->
+        <div class="image-side">
+            <!-- The background image will be applied using CSS -->
+        </div>
+    </div>
+{% endblock %}
