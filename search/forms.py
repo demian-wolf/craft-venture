@@ -12,6 +12,9 @@ class SearchForm(forms.ModelForm):
         widgets = {
             "starts_at": forms.DateInput(attrs={"type": "date"}),
             "ends_at": forms.DateInput(attrs={"type": "date"}),
+
+            "lat": forms.HiddenInput(),
+            "lng": forms.HiddenInput(),
         }
 
 

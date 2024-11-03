@@ -1,4 +1,7 @@
+import math
+
 from django.views import View
+from django.db.models import F
 from django.shortcuts import render
 from django.http import Http404
 from django.shortcuts import render, redirect
@@ -45,6 +48,8 @@ class IndexView(View):
             starts_at=form.cleaned_data.get("starts_at"),
             ends_at=form.cleaned_data.get("ends_at"),
             radius=form.cleaned_data.get("radius"),
+            lat=form.cleaned_data.get("lat"),
+            lng=form.cleaned_data.get("lng"),
         )
 
         return redirect("search")
@@ -74,6 +79,27 @@ class UserSearchView(View):
 
         return search
 
+    def _get_workshop(self, search, stages):
+        used_workshop_ids = stages.values_list("workshop__id", flat=True)
+
+        workshops = Workshop.objects.exclude(id__in=used_workshop_ids)
+        workshops = iter(workshops)
+
+        while True:
+            w = next(workshops, None)
+
+            if w is None:
+                return None
+
+            h = haversine(
+                w.location.lng, w.location.lat,
+                search.lng, search.lat,
+            )
+
+            if h <= search.radius:
+                return w
+
+
     def get(self, request):
         search = self._get_search(request)
 
@@ -82,8 +108,7 @@ class UserSearchView(View):
             is_completed=True,
         )
 
-        used_workshop_ids = stages.values_list("workshop__id", flat=True)
-        workshop = Workshop.objects.exclude(id__in=used_workshop_ids).first()
+        workshop = self._get_workshop(search, stages)
 
         if workshop is None:  # start over
             search.delete()
@@ -117,3 +142,19 @@ class UserSearchView(View):
         return render(
             request, "search/index.html", {"form": form},
         )
+
+
+
+def haversine(lng1, lat1, lng2, lat2) -> float:
+    R = 6371000
+
+    phi_1 = math.radians(lat1)
+    phi_2 = math.radians(lat2)
+    d_phi = math.radians(lat2 - lat1)
+    d_lambda = math.radians(lng2 - lng1)
+
+    a = math.sin(d_phi / 2.0) ** 2 + math.cos(phi_1) * math.cos(phi_2) * math.sin(d_lambda / 2.0) ** 2
+    
+    c = 2 * math.atan2(math.sqrt(a), math.sqrt(1 - a))
+
+    return R * c
