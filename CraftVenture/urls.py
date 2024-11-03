@@ -22,6 +22,11 @@ import workshop.views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('search.urls')),
     path('accounts/', include('accounts.urls')),
+    path('planner/', include('planner.urls')),
+    path('location/', include('location_app.urls')),
+    path('search/', include('search.urls')),
+    path('', workshop.views.index, name='index'),
+    path('login/', workshop.views.signin, name='login'),
+    path('register/', workshop.views.signup, name='register'),
 ]

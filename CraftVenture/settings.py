@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'workshop',
     'search',
     'accounts',
+    'planner',
 ]
 
 MIDDLEWARE = [
