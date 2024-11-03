@@ -22,6 +22,9 @@ async function initMap() {
         latElement = document.getElementsByName("lat")[0];
         latElement.value = pos.lat;
 
+        submitButton = document.getElementById("submitButton");
+        submitButton.disabled = false;
+
         placeMarker(event.latLng);
     });
 }
