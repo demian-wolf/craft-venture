@@ -30,6 +30,9 @@ class UserSearch(models.Model):
         validators=[MinValueValidator(500), MaxValueValidator(500_000)],
     )
 
+    lat = models.DecimalField(max_digits=9, decimal_places=6)
+    lng = models.DecimalField(max_digits=9, decimal_places=6)
+
 
 class UserSearchStage(models.Model):
     search = models.ForeignKey(

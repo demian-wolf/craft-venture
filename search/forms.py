@@ -7,7 +7,7 @@ class SearchForm(forms.ModelForm):
     class Meta:
         model = UserSearch
         
-        fields = ["starts_at", "ends_at", "radius"]
+        fields = ["starts_at", "ends_at", "radius", "lat", "lng"]
         
         widgets = {
             "starts_at": forms.DateInput(attrs={"type": "date"}),
