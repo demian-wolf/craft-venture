@@ -80,3 +80,17 @@
         height: auto; /* Maintain aspect ratio */
         object-fit: cover; /* Ensures the image covers the container */
     }
+
+    .error {
+        color: red;
+        font-weight: 400;
+        font-size: 18px;
+    }
+
+    .error::before {
+    content: '❌'; /* Bullet character */
+    color: red; /* Match bullet color to text color */
+    font-weight: bold; /* Make bullet bold */
+    display: inline-block; /* Align it properly */
+    margin-right: 5px; /* Space between bullet and text */
+}
