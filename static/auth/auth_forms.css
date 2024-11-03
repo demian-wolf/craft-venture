@@ -1,0 +1,82 @@
+/* Basic reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+/* Flex container for the full layout */
+    .container {
+        display: flex;
+        height: 100vh; /* Full viewport height */
+    }
+
+/* Left side - auth form */
+    .auth-form {
+        flex: 1;
+        padding: 2rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: flex-start;
+    }
+
+    .auth-form h2 {
+        margin-bottom: 1rem;
+        color: #333;
+        font-family: var(--font-secondary);
+    }
+
+    .auth-form form {
+        width: 100%;
+    }
+
+    .auth-form label {
+        display: block;
+        margin-top: 1rem;
+        font-weight: 500;
+        color: #555;
+        font-family: var(--font-secondary);
+    }
+
+    .auth-form input {
+        width: 100%;
+        padding: 0.75rem 0.75rem 0.75rem 2.25rem;
+        margin-top: 0.5rem;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+    }
+
+    .auth-form button {
+        margin-top: 1.5rem;
+        padding: 0.75rem;
+        width: 100%;
+        background-color: #007bff;
+        border: none;
+        color: #fff;
+        font-size: 1rem;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+    .auth-form button:hover {
+        background-color: #0056b3;
+    }
+
+    .image-container {
+        position: relative;
+        height: 100%; /* Ensures the container takes the full height */
+        clip-path: polygon(20% 0, 100% 0, 100% 100%, 0% 100%);
+        overflow: hidden; /* Prevents overflow of image outside the container */
+    }
+
+    .image-container img {
+        position: absolute; /* Positioning for the image */
+        top: 50%; /* Center the image */
+        left: 50%; /* Center the image */
+        transform: translate(-50%, -50%); /* Adjust for centering */
+        width: 120%; /* Slightly larger to ensure covering of the container */
+        height: auto; /* Maintain aspect ratio */
+        object-fit: cover; /* Ensures the image covers the container */
+    }
