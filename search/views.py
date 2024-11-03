@@ -52,7 +52,7 @@ class IndexView(View):
             lng=form.cleaned_data.get("lng"),
         )
 
-        return redirect("search")
+        return redirect("stage")
 
 
 class UserSearchView(View):
@@ -137,7 +137,7 @@ class UserSearchView(View):
                 is_accepted=is_accepted,
             )
 
-            return redirect("search")
+            return redirect("stage")
 
         return render(
             request, "search/index.html", {"form": form},

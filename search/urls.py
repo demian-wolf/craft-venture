@@ -4,5 +4,5 @@ from .views import IndexView, UserSearchView
 
 urlpatterns = [
     path('', IndexView.as_view(), name="index"),
-    path('search', UserSearchView.as_view(), name="search"),
+    path('stage', UserSearchView.as_view(), name="stage"),
 ]
