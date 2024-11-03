@@ -17,9 +17,7 @@
     <link rel="stylesheet" href="{% static 'workshop/index.css' %}">
 {% endblock %}
 
-{% block main %}
-    {% include 'common/nav_main.html' %}
-    
+{% block main %}    
     <div class="banner">
         <div class="heading-content">
             <h1 class="heading-content__title">CraftVenture</h1>
@@ -36,6 +34,4 @@
             <div id="map"></div>
         </div>
     </div>
-
-    {% include 'common/footer.html' %}
 {% endblock %}

@@ -20,6 +20,7 @@
     </head>
     <body>
         <header>
+            {% include 'common/nav_main.html' %}
             {% block header %}{% endblock %}
         </header>   
         <main>
@@ -27,6 +28,7 @@
         </main>
         <footer>
             {% block footer %}{% endblock %}
+            {% include 'common/footer.html' %}
         </footer>
     </body>
 </html>
