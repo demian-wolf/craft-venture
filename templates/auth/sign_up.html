@@ -18,7 +18,7 @@
                     <form method="POST">
                         {% csrf_token %}
                         <h2>Sign Up</h2>
-                        <p class="pb-2">You already have an account? <a href="/login/">Sign In</a></p>
+                        <p class="pb-2">You already have an account? <a href="{% url 'sign_in' %}">Sign In</a></p>
 
                         <ul class="errorlist pb-2">
                             {% for error in form.non_field_errors %}

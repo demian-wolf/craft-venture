@@ -1,11 +1,15 @@
 from django import forms
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 from django.http import HttpResponse
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from django.urls import reverse_lazy, reverse
 from django.views.generic import FormView, View
 
+from accounts.forms.sign_in_form import SignInForm
 from accounts.forms.sign_up_form import SignUpForm
 
 
@@ -32,7 +36,25 @@ class SignUpView(FormView):
             return self.form_invalid(form)
 
 
-class SignInView(View):
-    pass
+class SignInView(FormView):
+    template_name = 'auth/sign_in.html'
+    form_class = SignInForm
+    success_url = reverse_lazy('index')
 
-# Create your views here.
+    def form_valid(self, form):
+        email = form.cleaned_data['email']
+        password = form.cleaned_data['password']
+        user = authenticate(self.request, username=email, email=email, password=password)
+
+        if user is not None:
+            login(self.request, user)
+            return super().form_valid(form)
+        else:
+            form.add_error(None, 'Invalid username or password!')
+            return self.form_valid(form)
+
+
+@login_required
+def sign_out(request):
+    logout(request)
+    return redirect(reverse('home'))
