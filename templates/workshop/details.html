@@ -1,24 +1,15 @@
-{% extends 'base.html' %}
 {% load static %}
 
-{% block site_links %}
     <style>
     .highlight {
         color: gold; /* or any color you want for the highlighted stars */
     }
     </style>
     <link rel="stylesheet" href="{% static '/workshop/details.css' %}">
-{% endblock %}
-
-{% block site_scripts %}
     
     <script src="{% static 'workshop/js/details.js' %}"></script>
     <script src="{% static 'workshop/js/review_script.js' %}"></script>
-{% endblock %}
 
-
-
-{% block site_main %}
     <!-- Button to Open Modal -->
 
     <div class="container">
@@ -100,26 +91,20 @@
             <div class="col-lg-5 text-center p-10">
                 <div class="row pb-3 my-2"> <!-- Reduced margin -->
                     <div class="col">
-                        <h4>Workshop1</h4>
+                        <h4>{{ workshop.title }}</h4>
                     </div>
                 </div>
                 <div class="row pb-4 my-2"> <!-- Reduced margin -->
                     <div class="col text-start">
-                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus alias aliquam, deserunt,
-                        distinctio dolore eaque eos inventore laboriosam mollitia neque nisi porro qui quo. A
-                        accusantium doloremque error exercitationem incidunt magni quasi quibusdam, saepe? Ab animi
-                        cupiditate deleniti dolores, earum, facere illum laboriosam magni nobis officiis perspiciatis
-                        reprehenderit sint vel.
+                        {{ workshop.description }}
                     </div>
                 </div>
                 <div class="row pb-1 my-2"> <!-- Reduced margin -->
                     <div class="col text-start mb-4">
                         <div class="price-card rounded p-3 shadow">
                             <div class="d-flex justify-content-between align-items-center">
-                                <span class="badge bg-success text-white">Special Price</span>
-                                <h4 class="mb-0">$125</h4>
+                                <h4 class="mb-0">£{{ workshop.price }}</h4>
                             </div>
-                            <p class="text-muted">Limited time offer!</p>
                             <div class="d-flex justify-content-between">
                                 <button class="btn btn-outline-primary" type="button">Buy Now</button>
 
@@ -164,29 +149,25 @@
                 <div class="row pb-4">
                     <div class="col text-center"> <!-- Center the rating -->
                         <div class="rating">
-                            <i class="fas fa-star text-warning"></i>
-                            <i class="fas fa-star text-warning"></i>
-                            <i class="fas fa-star text-warning"></i>
-                            <i class="fas fa-star-half-alt text-warning"></i> <!-- Half star for partial rating -->
-                            <i class="far fa-star text-warning"></i>
+                            {{ workshop.rating_prerendered|safe }}
                         </div>
                     </div>
                 </div>
-                <div class="row my-2"> <!-- Reduced margin -->
-                    <!-- Centered Success Button on Full Width Row -->
-                    <div class="col">
-                        <button type="button" class="btn btn-success w-100">
-                            <i class="fas fa-check-circle me-2"></i> Accept
-                        </button>
+                {% if is_searching %}
+                    <div class="row my-2"> <!-- Reduced margin -->
+                        <!-- Centered Success Button on Full Width Row -->
+                        <div class="col">
+                            <button type="button" class="btn btn-success w-100">
+                                <i class="fas fa-check-circle me-2"></i> Accept
+                            </button>
+                        </div>
+                        <div class="col">
+                            <button type="button" class="btn btn-danger w-100">
+                                <i class="fas fa-times-circle me-2"></i> Decline
+                            </button>
+                        </div>
                     </div>
-                    <div class="col">
-                        <button type="button" class="btn btn-danger w-100">
-                            <i class="fas fa-times-circle me-2"></i> Decline
-                        </button>
-                    </div>
-                </div>
+                {% endif %}
             </div>
         </div>
     </div>
-{% endblock %}
-

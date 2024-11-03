@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+
+{% block site_main %}
+    {% with is_search=false %}
+        {% for workshop in favorites %}
+            {% include "workshop/details.html" %}
+        {% endfor %}
+    {% endwith %}
+{% endblock %}
