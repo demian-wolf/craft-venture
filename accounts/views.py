@@ -1,13 +1,11 @@
-from django import forms
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 from django.http import HttpResponse
-from django.shortcuts import render, redirect
+from django.shortcuts import redirect
 from django.urls import reverse_lazy, reverse
-from django.views.generic import FormView, View
+from django.views.generic import FormView
 
 from accounts.forms.sign_in_form import SignInForm
 from accounts.forms.sign_up_form import SignUpForm
@@ -57,4 +55,4 @@ class SignInView(FormView):
 @login_required
 def sign_out(request):
     logout(request)
-    return redirect(reverse('home'))
+    return redirect(reverse('index'))

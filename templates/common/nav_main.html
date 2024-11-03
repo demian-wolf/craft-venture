@@ -1,0 +1,30 @@
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <div class="container-fluid">
+        <!-- Brand -->
+        <a class="navbar-brand d-flex align-items-center" href="/">
+            <img src="https://getbootstrap.com/docs/4.0/assets/brand/bootstrap-solid.svg" width="30" height="30" alt="" class="me-2">
+            <span style="font-family: var(--font-secondary); font-size: 24px">CraftVenture</span>
+        </a>
+
+        <!-- Toggler for mobile view -->
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <!-- Navbar Links -->
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto"> <!-- Align links to the right with ms-auto -->
+                <!-- Register Button -->
+                <li class="nav-item me-2">
+                    <a class="btn btn-outline-light" href="{% url 'sign_up' %}">Register</a>
+                </li>
+                
+                <!-- Login Button -->
+                <li class="nav-item">
+                    <a class="btn btn-light text-primary" href="{% url 'sign_in' %}">Login</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
