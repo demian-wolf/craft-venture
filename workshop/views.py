@@ -3,4 +3,4 @@ from django.shortcuts import render
 
 
 def index(request):
-    return render(request, "workshop/details.html")
+    return render(request, "auth/sign_up.html")
