@@ -56,6 +56,7 @@ class Image(models.Model):
         on_delete=models.CASCADE,
     )
 
+
 class WorkshopImageMapping(models.Model):
     workshop = models.ForeignKey(
         Workshop,

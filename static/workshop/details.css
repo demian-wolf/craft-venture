@@ -1,0 +1,14 @@
+.rating i {
+    font-size: 2rem; /* Adjust the size as needed */
+}
+
+.position-relative {
+    position: relative;
+}
+.shadow {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.img-thumbnail.rounded.img-fluid {
+    cursor: pointer;
+}

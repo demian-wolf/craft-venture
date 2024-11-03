@@ -1,10 +1,53 @@
-{% extends "base.html" %}
+{% load static %}
 
-{% block site_main %}
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <input type="submit" value="Submit"/>
-</form>
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    
+    <link rel="stylesheet" href="{% static 'shared/styles.css' %}">
+    <link rel="stylesheet" href="{% static 'workshop/index.css' %}">
+    
+    <title>Home Page</title>
+</head>
+<body>
+    <div class="banner">
+        <div class="heading-content">
+            <h1 class="heading-content__title">CraftVenture</h1>
+            <h2 class="heading-content__subtitle">Explore, learn and earn! Craft Venture, the app that will give you the opportunity to try the things you have ever wanted to do!</h2>
+            
+            <form class="heading-content-form" method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <input type="submit" value="Submit"/>
+            </form>
 
-{% endblock %}
+{#            <form action="">#}
+{#                <div class="heading-content-form__input">#}
+{#                    <label for=""></label>#}
+{#                    <input placeholder="Start Date ...   5/11/2024" type="text" >#}
+{#                </div>#}
+{#              #}
+{#                <div class="heading-content-form__input">#}
+{#                    <label for=""></label>#}
+{#                    <input placeholder="End Date ...   12/12/2024" type="text">#}
+{#                </div>#}
+{#                #}
+{#                <div class="heading-content-form__submit">#}
+{#                    <button>Submit</button>#}
+{#                </div>#}
+{#            </form>#}
+        </div>
+        
+        <div class="heading-map">
+            <div id="map"></div>
+        </div>
+    </div>
+    
+</body>
+    <script src="{% static 'location_app/js/load_map_and_markers.js' %}"></script>
+    <script src="{% static 'location_app/js/map_script_setup.js' %}"></script>
+</html>
