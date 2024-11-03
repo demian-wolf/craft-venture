@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'location_app',
     'workshop',
     'search',
+    'planner',
 ]
 
 MIDDLEWARE = [
