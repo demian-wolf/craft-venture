@@ -17,8 +17,10 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
+import workshop.views
+
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('location/', include('location_app.urls')),
     path('search/', include('search.urls')),
+    path('', workshop.views.index, name='index'),
 ]
