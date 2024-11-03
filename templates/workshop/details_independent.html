@@ -1,0 +1,7 @@
+{% extends "base.html" %}
+
+{% block main %}
+    {% with is_search=false %}
+        {% include "workshop/details.html" %}
+    {% endwith %}
+{% endblock %}

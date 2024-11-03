@@ -28,4 +28,5 @@ urlpatterns = [
     path('location/', include('location_app.urls')),
 
     path('', include('search.urls')),
+    path('workshop/', include('workshop.urls')),
 ]
