@@ -22,6 +22,6 @@ import workshop.views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('search/', include('search.urls')),
+    path('', include('search.urls')),
     path('accounts/', include('accounts.urls')),
 ]
