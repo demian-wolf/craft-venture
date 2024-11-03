@@ -1,0 +1,10 @@
+.navbar-brand img {
+    margin-right: 8px;
+}
+
+.navbar {
+    padding: 1rem 2rem; /* Space out the navbar */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add a subtle shadow for depth */
+
+    font-family: var(--font-primary);
+}

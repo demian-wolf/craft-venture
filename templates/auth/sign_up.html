@@ -6,35 +6,59 @@
 {% endblock %}
 
 {% block site_main %}
+
     <div class="container-fluid d-flex align-items-center justify-content-center"
+            {#        {{ form }}#}
+
          style="height: 100vh;">
         <div class="row w-100 h-100">
-
             <!-- Left Column: Form -->
             <div class="col-md-6 d-flex justify-content-center align-items-center" style="height: 100%;">
                 <div class="auth-form" id="authForm">
-                   <form>
+                    <form method="POST">
+                        {% csrf_token %}
                         <h2>Sign Up</h2>
-                        <p class="pb-4">You already have an account? <a href="/login/">Sign In</a></p>
-            
-                        <div class="form-group position-relative mb-3">
-                            <label for="email" class="visually-hidden">Email:</label>
+                        <p class="pb-2">You already have an account? <a href="{% url 'sign_in' %}">Sign In</a></p>
+
+                        <ul class="errorlist pb-2">
+                            {% for error in form.non_field_errors %}
+                                <li class="error">{{ error }}</li>
+                            {% endfor %}
+                        </ul>
+
+                        <ul>
+                            {% for error in form.email.errors %}
+                                <li class="error">{{ error }}</li>
+                            {% endfor %}
+                        </ul>
+                        <div class="form-group position-relative mb-4">
                             <i class="fas fa-envelope position-absolute" style="left: 12px; top: 16px;"></i>
-                            <input class="form-control pl-4" type="email" id="email" name="email" placeholder="Email" required>
+                            {{ form.email }}
                         </div>
-            
-                        <div class="form-group position-relative mb-3">
-                            <label for="password" class="visually-hidden">Password:</label>
+
+                        <ul>
+                            {% for error in form.password.errors %}
+                                <li class="error">{{ error }}</li>
+                            {% endfor %}
+                        </ul>
+                        <div class="form-group position-relative mb-4">
                             <i class="fas fa-lock position-absolute" style="left: 12px; top: 16px;"></i>
-                            <input class="form-control pl-5" type="password" id="password" name="password" placeholder="Password" required>
+                            {{ form.password.error }}
+                            {{ form.password }}
                         </div>
-            
-                        <div class="form-group position-relative mb-3">
-                            <label for="confirm-password" class="visually-hidden">Confirm Password:</label>
+
+                        <ul>
+                            {% for error in form.confirm_password.errors %}
+                                <ul>
+                                    <li class="error">{{ error }}</li>
+                                </ul>
+                            {% endfor %}
+                        </ul>
+                        <div class="form-group position-relative mb-4">
                             <i class="fas fa-lock position-absolute" style="left: 12px; top: 16px;"></i>
-                            <input class="form-control pl-5" type="password" id="confirm-password" name="confirm-password" placeholder="Confirm Password" required>
+                            {{ form.confirm_password }}
                         </div>
-            
+
                         <button type="submit" class="btn btn-primary w-100">Sign Up</button>
                     </form>
                 </div>
