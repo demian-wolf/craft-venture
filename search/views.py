@@ -112,7 +112,10 @@ class UserSearchView(View):
 
         if workshop is None:  # start over
             search.delete()
-            return redirect("index")
+
+            return render(
+                request, "search/restart.html",
+            )
 
         UserSearchStage.objects.get_or_create(
             search=search,

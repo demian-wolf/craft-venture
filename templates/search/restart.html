@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block scripts %}
+    <script>
+        setTimeout(function() {
+            location.href = "{% url 'index' %}";
+        }, 5000);
+    </script>
+{% endblock %}
+
+{% block main %}
+    <div>
+        <p>
+            No suitable workshops available. Try another location or a different radius.
+        </p>
+
+        <p>
+            <a href="{% url 'index' %}">Click here</a> to return to the home page.
+        </p>
+
+        <p>
+            You will be automatically redirected in 5 seconds.
+        </p>
+    </div>
+{% endblock %}
