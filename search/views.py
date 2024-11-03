@@ -1,25 +1,24 @@
 from django.views import View
 from django.shortcuts import render
-from django.http import HttpResponse, Http404, HttpResponseBadRequest
+from django.http import Http404
 from django.shortcuts import render, redirect
 
 from search.models import TemporaryUser, UserSearch, UserSearchStage
 
-from search.forms import SearchForm
+from search.forms import SearchForm, UserSearchStageForm
 from workshop.models import Workshop
 
 
-def _ownership(request) -> dict:
-    if request.user.is_authenticated:
-        return {"user": request.user}
-    
-    temporary_user = TemporaryUser.objects.create()
-    request.session["temporary_user_id"] = str(temporary_user.id)
-
-    return {"temporary_user_id": temporary_user.id}
-
-
 class IndexView(View):
+    def _get_ownership(self, request) -> dict:
+        if request.user.is_authenticated:
+            return {"user": request.user}
+        
+        temporary_user = TemporaryUser.objects.create()
+        request.session["temporary_user_id"] = str(temporary_user.id)
+
+        return {"temporary_user_id": temporary_user.id}
+
     def get(self, request):
         form = SearchForm()
         
@@ -35,8 +34,7 @@ class IndexView(View):
                 request, "workshop/index.html", {"form": form},
             )
 
-        ownership = _ownership(request)
-        data = form.cleaned_data
+        ownership = self._get_ownership(request)
 
         # reset search for the user
         UserSearch.objects.filter(**ownership).delete()
@@ -44,39 +42,54 @@ class IndexView(View):
         # create a new one
         UserSearch.objects.create(
             **ownership,
-            starts_at=data.get("starts_at"),
-            ends_at=data.get("ends_at"),
-            radius=data.get("radius"),
+            starts_at=form.cleaned_data.get("starts_at"),
+            ends_at=form.cleaned_data.get("ends_at"),
+            radius=form.cleaned_data.get("radius"),
         )
 
         return redirect("search")
 
 
 class UserSearchView(View):
-    def get(self, request):
+    def _get_search(self, request):
         if request.user.is_authenticated:
-            search = UserSearch.objects.get(user=request.user)
+            query = {"user": request.user}
         else:
             temporary_user_id = request.session.get("temporary_user_id")
-            temporary_user = TemporaryUser.objects.get(id=temporary_user_id)
+            
+            if not temporary_user_id:
+                raise Http404
 
-            search = UserSearch.objects.get(temporary_user=temporary_user)
+            try:
+                temporary_user = TemporaryUser.objects.get(id=temporary_user_id)
+            except TemporaryUser.DoesNotExist:
+                raise Http404
 
-        exclude = {stage.workshop.id for stage in UserSearchStage.objects.filter(
+            query = {"temporary_user": temporary_user}
+        
+        try:
+            search = UserSearch.objects.get(**query)
+        except UserSearch.DoesNotExist:
+            raise Http404
+
+        return search
+
+    def get(self, request):
+        search = self._get_search(request)
+
+        stages = UserSearchStage.objects.filter(
             search=search,
-        )}
-
-        exclude = UserSearchStage.objects.filter(
-            search=search,
-        ).values_list("workshop__id", flat=True)
-
-        workshop = Workshop.objects.exclude(
-            id__in=exclude,
-        ).exclude(
             is_completed=True,
-        ).first()
+        )
 
-        UserSearchStage.objects.create(
+        used_workshop_ids = stages.values_list("workshop__id", flat=True)
+        workshop = Workshop.objects.exclude(id__in=used_workshop_ids).first()
+
+        if workshop is None:  # start over
+            search.delete()
+            return redirect("index")
+
+        UserSearchStage.objects.get_or_create(
             search=search,
             workshop=workshop,
         )
@@ -86,34 +99,21 @@ class UserSearchView(View):
         )
 
     def post(self, request):
-        workshop_id = request.POST.get("workshop_id")
-        is_accepted = request.POST.get("accepted")
-        
-        if (workshop_id is None) or (is_accepted is None):
-            raise HttpResponseBadRequest
+        search = self._get_search(request)
 
-        if request.user.is_authenticated:
-            ownership = {"user": request.user}
-        else:
-            temporary_user_id = request.session.get("temporary_user_id")
+        form = UserSearchStageForm(request.POST)
 
-            if temporary_user_id is None:
-                raise Http404
+        if form.is_valid():
+            is_accepted = form.cleaned_data.get("is_accepted")
+            
+            UserSearchStage.objects.update(
+                search=search,
+                is_completed=True,
+                is_accepted=is_accepted,
+            )
 
-            ownership = {"temporary_user_id": temporary_user_id}
+            return redirect("search")
 
-        if is_accepted.lower() == "true":
-            is_accepted = True
-        elif is_accepted.lower() == "false":
-            is_accepted = False
-        else:
-            return HttpResponseBadRequest("Invalid accepted status. Expected 'true' or 'false'.")
-
-        feedback = SearchFeedback.objects.create(
-            workshop_id=workshop_id,
-            is_accepted=is_accepted,
-            **ownership,
+        return render(
+            request, "search/index.html", {"form": form},
         )
-        feedback.save()
-
-        return HttpResponse("", status=204)

@@ -1,6 +1,6 @@
 from django import forms
 
-from .models import UserSearch
+from .models import UserSearch, UserSearchStage
 
 
 class SearchForm(forms.ModelForm):
@@ -13,3 +13,10 @@ class SearchForm(forms.ModelForm):
             "starts_at": forms.DateInput(attrs={"type": "date"}),
             "ends_at": forms.DateInput(attrs={"type": "date"}),
         }
+
+
+class UserSearchStageForm(forms.ModelForm):
+    class Meta:
+        model = UserSearchStage
+
+        fields = ["is_accepted"]
