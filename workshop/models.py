@@ -15,6 +15,15 @@ class Image(models.Model):
     content = models.ImageField()
 
 
+class Location(models.Model):
+    city = models.CharField(max_length=128)
+    address = models.CharField(max_length=128)
+    postcode = models.CharField(max_length=16)
+
+    lat = models.FloatField()
+    lng = models.FloatField()
+
+
 class Workshop(models.Model):
     scheduled_at = models.DateField()
     created_at = models.DateField(auto_now=True)
@@ -29,10 +38,7 @@ class Workshop(models.Model):
     price = models.DecimalField(max_digits=16, decimal_places=2)
     capacity = models.IntegerField()
 
-    location = models.ForeignKey(
-        "location_app.Location",
-        on_delete=models.CASCADE,
-    )
+    location = models.ForeignKey(Location, on_delete=models.CASCADE)
 
     def get_average_rating(self) -> int:
         reviews = Review.objects.filter(workshop=self)
